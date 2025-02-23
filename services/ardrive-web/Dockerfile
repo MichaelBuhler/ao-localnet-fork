@@ -1,4 +1,4 @@
-FROM ubuntu as builder
+FROM ubuntu AS builder
 ARG ARDRIVE_WEB_VERSION=v2.37.2
 ARG FLUTTER_VERSION=3.19.2
 
@@ -22,5 +22,5 @@ RUN scr setup
 RUN flutter config --enable-web
 RUN flutter build web --dart-define=environment=development
 
-FROM httpd:alpine
+FROM httpd:alpine AS runner
 COPY --from=builder /src/ardrive-web/build/web /usr/local/apache2/htdocs/

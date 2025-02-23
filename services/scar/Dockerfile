@@ -1,7 +1,7 @@
 ################################################################################
 # Download
 
-FROM node:alpine as downloader
+FROM node:alpine AS downloader
 WORKDIR /download
 
 RUN apk add git
@@ -13,7 +13,7 @@ RUN git clone --branch=${BRANCH} --depth=1 ${REPO} .
 ################################################################################
 # Build
 
-FROM node:alpine as builder
+FROM node:alpine AS builder
 WORKDIR /build
 COPY --from=downloader /download .
 
@@ -25,5 +25,5 @@ RUN yarn run build --mode development
 ################################################################################
 # Run
 
-FROM httpd:alpine
+FROM httpd:alpine AS runner
 COPY --from=builder /build/dist /usr/local/apache2/htdocs

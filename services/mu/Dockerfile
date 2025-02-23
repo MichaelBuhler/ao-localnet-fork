@@ -1,4 +1,4 @@
-FROM node:alpine as builder
+FROM node:alpine AS builder
 ARG MU_VERSION=main
 
 RUN apk add git
@@ -6,7 +6,7 @@ RUN apk add git
 WORKDIR /download
 RUN git clone --branch=${MU_VERSION} --depth=1 https://github.com/permaweb/ao.git
 
-FROM node:alpine
+FROM node:alpine AS runner
 COPY --from=builder /download/ao/servers/mu /usr/app
 WORKDIR /usr/app
 

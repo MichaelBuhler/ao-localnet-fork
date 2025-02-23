@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:alpine AS runner
 WORKDIR /app
 COPY package.json .
 COPY server.mjs .

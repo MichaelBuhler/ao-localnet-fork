@@ -1,4 +1,4 @@
-FROM node:alpine as downloader
+FROM node:alpine AS downloader
 ARG SU_VERSION=main
 
 RUN apk add git
@@ -12,7 +12,7 @@ COPY --from=downloader /download/ao/servers/su .
 
 RUN cargo build --release
 
-FROM rust:slim
+FROM rust:slim AS runner
 WORKDIR /app
 COPY --from=builder /build/target/release/su .
 

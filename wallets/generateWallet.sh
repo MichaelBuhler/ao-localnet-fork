@@ -21,6 +21,6 @@ if [ -f "$WALLET_FILE" ]; then
   exit 1
 fi
 
-npx --yes @permaweb/wallet > "$WALLET_FILE"
+npx --yes @permaweb/wallet@0.1.0 > "$WALLET_FILE"
 
 echo "$WALLET_FILE created."

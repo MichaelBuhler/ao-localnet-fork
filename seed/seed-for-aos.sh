@@ -36,7 +36,4 @@ echo "!!!"
 # Publish the `aos` Module
 
 ./publish-aos-module.mjs
-echo
-echo "copy this   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-echo
 ./mine.mjs

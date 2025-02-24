@@ -1,22 +1,22 @@
+################################################################################
+# Download
+
 FROM node:alpine AS downloader
-ARG SU_VERSION=main
+WORKDIR /download
 
 RUN apk add git
 
-WORKDIR /download
+ARG SU_VERSION=main
 RUN git clone --branch=${SU_VERSION} --depth=1 https://github.com/permaweb/ao.git
 
-FROM rust AS builder
-WORKDIR /build
-COPY --from=downloader /download/ao/servers/su .
+################################################################################
+# Run
 
-RUN cargo build --release
-
-FROM rust:slim AS runner
+FROM rust:latest AS runner
 WORKDIR /app
-COPY --from=builder /build/target/release/su .
+COPY --from=downloader /download/ao/servers/su/su .
 
-RUN apt update && apt install --yes libpq5
+RUN chmod +x su
 
 EXPOSE 80
 CMD ["./su", "su", "80"]

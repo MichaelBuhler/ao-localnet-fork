@@ -1,20 +1,31 @@
-FROM node:alpine AS builder
-ARG MU_VERSION=main
+################################################################################
+# Download
+
+FROM alpine:latest AS downloader
+WORKDIR /download
 
 RUN apk add git
 
-WORKDIR /download
+ARG MU_VERSION=main
 RUN git clone --branch=${MU_VERSION} --depth=1 https://github.com/permaweb/ao.git
 
-FROM node:alpine AS runner
-COPY --from=builder /download/ao/servers/mu /usr/app
-WORKDIR /usr/app
+################################################################################
+# Build
 
-RUN sed -i '/postinstall/d' package.json
-RUN sed -i '/heapdump/d' package.json
-RUN sed -i '/heapdump/d' src/app.js
+FROM node:22 AS builder
+WORKDIR /build
+COPY --from=downloader /download/ao/servers/mu .
 
 RUN npm install --ignore-engines --omit=dev
+
+################################################################################
+# Run
+
+FROM node:22 AS runner
+WORKDIR /app
+COPY --from=builder /build/node_modules node_modules
+COPY --from=builder /build/package.json .
+COPY --from=builder /build/src src
 
 EXPOSE 80
 CMD ["npm", "start"]

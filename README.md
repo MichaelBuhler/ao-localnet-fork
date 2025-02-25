@@ -32,21 +32,20 @@ The repo may helpful if you are doing one or more of the following:
     1. `cd` into the `wallets` directory (at the root of this repo).
     1. Run `generateAll.sh` to create new wallets for everything.
         - _See [wallets/README.md](wallets/README.md) for more details._
-    1. Run `printWalletAddresses.mjs` to list the addresses. _(Useful for step 4, below.)_
 1. Boot up the localnet:
     1. Run `docker compose up --detach`.
         - _You will need to have the Docker daemon running._
         - _This could take a while the first time you run it._
       - You will have many services now bound to ports in the 4000 range (all subject to change):
           - http://localhost:4000/ - ArLocal (Arweave gateway/mock)
-          - http://localhost:4007/ - A simple Arweave bundler/uploader
-          - http://localhost:4004/ - An `ao` compute unit (`cu`).
-          - http://localhost:4002/ - An `ao` messenger unit (`cm`).
+          - http://localhost:4002/ - An `ao` messenger unit (`mu`).
           - http://localhost:4003/ - An `ao` schedule unit (`su`).
-1. Seed data onto the blockchain:
+          - http://localhost:4004/ - An `ao` compute unit (`cu`).
+          - http://localhost:4007/ - A simple Arweave bundler/uploader
+1. Seed initial data onto the blockchain:
     1. `cd` into the `seed` directory (at the root of this repo).
-    1. Run `./download-aos-module.sh` to pull a WASM binary from testnet.
-    1. Set your wallet addresses _(from step 2, above)_ in `./seed-for-aos.sh`, then run it.
+    1. Run `./download-aos-module.sh` to fetch an AOS WASM binary from Arweave.
+    1. Run `./seed-for-aos.sh` to grant AR tokens to the wallets and publish the AOS module.
 1. Run `aos`:
     1. `cd` into the `aos` directory (at the root of this repo).
     1. Run `./aos`.

@@ -1,4 +1,11 @@
 {
+  "name": "ao-localnet",
+  "bin": {
+    "aos": "aos"
+  },
+  "scripts": {
+    "install": "wallets/generateAll.sh && seed/download-aos-module.sh"
+  },
   "dependencies": {
     "@permaweb/aos": "https://get_ao.g8way.io"
   }

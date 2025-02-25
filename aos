@@ -4,7 +4,7 @@ AOS_BIN=node_modules/.bin/aos
 AOS_WALLET_FILE=wallets/aos-wallet.json
 SCHEDULER_LOCATION_PUBLISHER_WALLET_FILE=wallets/scheduler-location-publisher-wallet.json
 
-cd $(dirname $0)
+cd $(dirname $(realpath $0))
 
 for wallet in $AOS_WALLET_FILE $SCHEDULER_LOCATION_PUBLISHER_WALLET_FILE; do
   if [ ! -f "$wallet" ]; then

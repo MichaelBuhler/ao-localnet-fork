@@ -1,8 +1,8 @@
 #!/bin/sh
 
 AOS_BIN=node_modules/.bin/aos
-AOS_WALLET_FILE=../wallets/aos-wallet.json
-SCHEDULER_LOCATION_PUBLISHER_WALLET_FILE=../wallets/scheduler-location-publisher-wallet.json
+AOS_WALLET_FILE=wallets/aos-wallet.json
+SCHEDULER_LOCATION_PUBLISHER_WALLET_FILE=wallets/scheduler-location-publisher-wallet.json
 
 cd $(dirname $0)
 
@@ -16,6 +16,11 @@ done
 if [ ! -f "$AOS_BIN" ]; then
   npm install
 fi
+
+ARWEAVE_GRAPHQL=http://localhost:4000/graphql
+CU_URL=http://localhost:4004
+GATEWAY_URL=http://localhost:4000
+MU_URL=http://localhost:4002
 
 # Graphql query to Arlocal to automatically discover the AOS module tx id
 AOS_MODULE=$(
@@ -33,7 +38,7 @@ const query = \`query {
   }
 }\`
 const body = JSON.stringify({ query })
-const res = await fetch('http://localhost:4000/graphql', {
+const res = await fetch('$ARWEAVE_GRAPHQL', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body,
@@ -59,10 +64,6 @@ node --input-type=module <<EOF
 EOF
 )
 
-ARWEAVE_GRAPHQL=http://localhost:4000/graphql
-CU_URL=http://localhost:4004
-GATEWAY_URL=http://localhost:4000
-MU_URL=http://localhost:4002
 
 echo "AOS_MODULE      = $AOS_MODULE"
 echo "ARWEAVE_GRAPHQL = $ARWEAVE_GRAPHQL"

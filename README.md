@@ -1,29 +1,43 @@
-> [!CAUTION]
-> **This is an experimental repo that is intended for power users.**
-
 # ao-localnet
 
 Run a complete [AO Computer](http://ao.computer/) testbed, locally, with Docker Compose.
 
+> [!CAUTION]
+> **This is an experimental repo that is intended for power users.**
+>
+> Please join the Marshal [Discord server](https://discord.gg/KzSRvefPau) for help and support.
+
 ## Purpose
 
-The repo may helpful if you are doing one or more of the following:
+The repository may helpful if you are doing one or more of the following:
 
 1. Contributing to [@permaweb/ao](https://github.com/permaweb/ao).
-1. Compiling `ao` modules using the `ao` [dev-cli](https://github.com/permaweb/dev-cli).
+1. Compiling custom `ao` modules using the [AO Dev CLI](https://github.com/permaweb/dev-cli) or other [another build process](https://github.com/MichaelBuhler/custom-ao-modules).
    - And you want to avoid publishing each revision onto Arweave mainnet.
 1. You are developing an `ao` component (e.g. a `cu`, `mu`, or `su`).
    - And you want to plug that into a working environment.
 1. You are developing Lua code that will be loaded into `aos` processes.
    - And you want to avoid bricking your `aos` processes on `ao` testnet.
 
-## Quick Start Guide
+## Quick Start Guide (as Node.js module)
+
+```shell
+npm install https://github.com/MichaelBuhler/ao-localnet.git
+npx ao-localnet configure       # generate wallets and download AOS module
+npx ao-localnet start           # build and run all Docker containers
+npx ao-localnet seed            # seed AOS and scheduler info into the localnet
+npx ao-localnet spawn "name"    # spawn new AOS process with "name"
+npx ao-localnet connect "name"  # connect to the new AOS process
+npx ao-localnet stop            # tear down Docker containers (data is retained)
+```
+
+## Quick Start Guide (Run from source)
 
 1. Clone this repo.
 1. Setup the necessary Arweave wallets:
     1. `cd` into the `wallets` directory (at the root of this repo).
-    1. Run `generateAll.sh` to create new wallets for everything.
-        - _See [wallets/README.md](wallets/README.md) for more details._
+    1. Run `./generateAll.sh` to create new wallets for everything.
+        - _See [wallets/README.md](./wallets/README.md) for more details._
 1. Boot up the localnet:
     1. Run `docker compose up --detach`.
         - _You will need to have the Docker daemon running._
@@ -39,18 +53,13 @@ The repo may helpful if you are doing one or more of the following:
     1. Run `./download-aos-module.sh` to fetch an AOS WASM binary from Arweave.
     1. Run `./seed-for-aos.sh` to grant AR tokens to the wallets and publish the AOS module.
 1. Run `aos`:
-    1. `cd` into the `aos` directory (at the root of this repo).
-    1. Run `./aos`.
+    1. Run `./aos.sh`.
 
 ## Additional Services
 
-> [!NOTE]
-> You can optionally enable the following services.
-> Powered by [Docker Compose profiles](https://docs.docker.com/compose/profiles/)
+> [!WARNING]
+> These are very old, experimental features that are not well supported.
 
-- ScAR (Arweave block explorer):
-  - Run `docker compose --profile explorer up`.
-  - http://localhost:4006/
 - ArDrive Web:
   - Run `docker compose --profile ardrive up`.
   - http://localhost:4001/
@@ -63,8 +72,7 @@ The repo may helpful if you are doing one or more of the following:
 ## Development Status of this Repo
 
 > [!WARNING]
-> `ao` and `aos` are have just started working, but configuration (such as port mappings) will change soon
-> and more usability features are planned.
+> Much of this section is currently outdated. WIP.
 
 - ✅ ArLocal instance mocking Arweave and acting as Arweave gateway.
   - ℹ️ There are some features missing from [the upstream](https://github.com/textury/arlocal)

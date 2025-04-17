@@ -1,12 +1,20 @@
 {
   "name": "ao-localnet",
   "bin": {
-    "aos": "aos"
+    "ao-localnet": "cli.sh"
   },
   "scripts": {
-    "install": "wallets/generateAll.sh && seed/download-aos-module.sh"
+    "aos": "./aos.sh",
+    "configure": "wallets/generateAll.sh && seed/download-aos-module.sh",
+    "reset": "seed/reset.mjs",
+    "reseed": "seed/reset.mjs && seed/seed-for-aos.sh",
+    "seed": "seed/seed-for-aos.sh",
+    "start": "docker compose up --detach",
+    "stop": "docker compose stop",
+    "spawn": "./spawn.sh"
   },
   "dependencies": {
-    "@permaweb/aos": "https://get_ao.g8way.io"
+    "@permaweb/aos": "https://get_ao.g8way.io",
+    "arweave": "^1.15.5"
   }
 }

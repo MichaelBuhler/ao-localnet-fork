@@ -10,7 +10,7 @@
     "reseed": "seed/reset.mjs && seed/seed-for-aos.sh",
     "seed": "seed/seed-for-aos.sh",
     "start": "docker compose up --detach",
-    "stop": "docker compose stop",
+    "stop": "docker compose down",
     "spawn": "./spawn.sh"
   },
   "dependencies": {

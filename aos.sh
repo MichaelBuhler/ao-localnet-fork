@@ -76,5 +76,9 @@ if [ -z "$AO_LOCALNET_NO_SPLASH" ]; then
   echo "using  args            = $@"
 fi
 
-AOS_BIN=$(realpath "$AO_LOCALNET_DIR/node_modules/.bin/aos")
+if [ -f "$AO_LOCALNET_DIR/node_modules/.bin/aos" ]; then
+  AOS_BIN=$(realpath "$AO_LOCALNET_DIR/node_modules/.bin/aos")
+else
+  AOS_BIN=$(realpath "$AO_LOCALNET_DIR/../.bin/aos")
+fi
 $AOS_BIN --wallet "$WALLET_FILE" "$@"

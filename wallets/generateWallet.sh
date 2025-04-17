@@ -23,4 +23,4 @@ fi
 
 npx --yes @permaweb/wallet@0.1.0 > "$WALLET_FILE"
 
-echo "$WALLET_FILE created."
+echo "created $WALLET_FILE..."

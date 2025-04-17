@@ -23,12 +23,16 @@ The repository may helpful if you are doing one or more of the following:
 
 ```shell
 npm install https://github.com/MichaelBuhler/ao-localnet.git
-npx ao-localnet configure       # generate wallets and download AOS module
-npx ao-localnet start           # build and run all Docker containers
-npx ao-localnet seed            # seed AOS and scheduler info into the localnet
-npx ao-localnet spawn "name"    # spawn new AOS process with "name"
-npx ao-localnet connect "name"  # connect to the new AOS process
-npx ao-localnet stop            # tear down Docker containers (data is retained)
+npx ao-localnet configure     # generate wallets and download AOS module
+npx ao-localnet start         # run Docker containers (build them if necessary)
+npx ao-localnet seed          # seed AOS and Scheduler info into the localnet
+npx ao-localnet spawn "name"  # spawn AOS process with correction Authority tag
+npx ao-localnet aos "name"    # connect to the new AOS process by name
+
+npx ao-localnet reset         # delete all data in the localnet
+npx ao-localnet reseed        # delete all data, then seed it again
+
+npx ao-localnet stop          # tear down Docker containers (data is retained)
 ```
 
 ## Quick Start Guide (Run from source)

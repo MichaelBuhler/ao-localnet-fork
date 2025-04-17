@@ -118,7 +118,6 @@ services:
       - turbo:/var/lib/postgresql/data
 
   scar:
-    profiles: ["explorer", "scar"]
     depends_on:
       arlocal:
         condition: service_healthy

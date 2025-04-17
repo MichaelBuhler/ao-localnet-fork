@@ -71,7 +71,7 @@ services:
       - 4003:80
 
   su-database:
-    image: postgres
+    image: postgres:17.4-bookworm
     environment:
       - POSTGRES_USER=su_user
       - POSTGRES_PASSWORD=su_pass

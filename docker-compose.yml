@@ -62,7 +62,12 @@ services:
         condition: service_healthy
       su-database:
         condition: service_healthy
-    build: ./services/su
+    build:
+      context: https://github.com/permaweb/ao.git#main:servers/su
+    entrypoint:
+      - "/app/su" # su executable binary
+      - "su"      # su mode (not router mode)
+      - "80"      # listen on port 80
     configs:
       - source: ao-wallet
         target: /app/ao-wallet.json

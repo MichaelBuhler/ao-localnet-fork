@@ -16,7 +16,7 @@ const tx = await arweave.createTransaction({
 tx.addTag('Data-Protocol', 'ao')
 tx.addTag('Type', 'Scheduler-Location')
 tx.addTag('Variant', 'ao.LN.1')
-tx.addTag('Url', 'http://host.docker.internal:4003')
+tx.addTag('Url', 'http://su')
 tx.addTag('Time-To-Live', '1')
 
 await arweave.transactions.sign(tx, wallet)

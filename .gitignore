@@ -1,4 +1,12 @@
-.DS_Store
-node_modules
 
+# ignore these folders in any folder
+node_modules/
+
+# ignore these files in any folder
+.DS_Store
+
+# ignore these files in the root folder
+/.env
+/docker-compose.override.yaml
+/docker-compose.override.yml
 /package-lock.json

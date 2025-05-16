@@ -15,6 +15,6 @@
   },
   "dependencies": {
     "@permaweb/aos": "https://get_ao.g8way.io",
-    "arweave": "^1.15.5"
+    "arweave": "^1.15.7"
   }
 }

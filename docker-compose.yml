@@ -146,3 +146,32 @@ services:
     env_file: ./services/bundler/.env
     ports:
       - 4007:80
+
+  lunar:
+    build:
+      context: https://github.com/permaweb/lunar.git#d89745b18799b9719f7db3984936c33974136d7e
+      dockerfile_inline: |
+        FROM node:22 AS builder
+        COPY . /app
+        WORKDIR /app
+        RUN npm install
+        RUN head -n 27 public/index.html > public/tmp.html
+        RUN echo "</body></html>" >> public/tmp.html
+        RUN mv public/tmp.html public/index.html
+        RUN sed -i "s|getTxEndpoint(|'https://arweave.net/'+(|" src/helpers/config.ts
+        RUN sed -i "s|https://arweave\.net|${GATEWAY_URL:-http://localhost:4000}|" src/helpers/endpoints.ts
+        RUN sed -i "s|https://cu\.ao-testnet\.xyz|${CU_URL:-http://localhost:4004}|" src/components/molecules/ProcessRead/ProcessRead.tsx
+        RUN sed -i "s|MODE: 'legacy'|MODE: 'legacy', GATEWAY_URL: '${GATEWAY_URL:-http://localhost:4000}', GRAPHQL_URL: '${GRAPHQL_URL:-http://localhost:4000/graphql}', CU_URL: '${CU_URL:-http://localhost:4004}', MU_URL: '${MU_URL:-http://localhost:4002}'|" src/providers/PermawebProvider.tsx
+        RUN sed -i "s|AO Legacynet|${CLIENT:-Marshal} Cloudnet|" src/views/Landing/index.tsx
+        RUN sed -i "s|<Metrics />||" src/views/Landing/index.tsx
+        RUN find src -type f -exec sed -i "s|getGQLData({|getGQLData({ gateway: '${GRAPHQL_URL:-http://localhost:4000/graphql}',|" {} +
+        RUN find node_modules/@permaweb/libs/dist -type f -exec sed -i "s|\`https://\$${\(.\.gateway\)}/graphql\`|\1|" {} +
+        RUN find node_modules/@permaweb/libs/dist -type f -exec sed -i "s|https://up.arweave.net|${BUNDLER_URL:-http://localhost:4007}|" {} +
+        RUN find node_modules/@permaweb/libs/dist -type f -exec sed -i "s|https://turbo.ardrive.io|${BUNDLER_URL:-http://localhost:4007}|" {} +
+        RUN find node_modules/@permaweb/libs/dist -type f -exec sed -i "s|https://arweave.net|${GATEWAY_URL:-http://localhost:4000}|" {} +
+        RUN npm run build
+
+        FROM nginx:alpine
+        COPY --from=builder /app/dist /usr/share/nginx/html
+    ports:
+      - 4008:80

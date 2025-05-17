@@ -169,6 +169,7 @@ services:
         RUN find node_modules/@permaweb/libs/dist -type f -exec sed -i "s|https://up.arweave.net|${BUNDLER_URL:-http://localhost:4007}|" {} +
         RUN find node_modules/@permaweb/libs/dist -type f -exec sed -i "s|https://turbo.ardrive.io|${BUNDLER_URL:-http://localhost:4007}|" {} +
         RUN find node_modules/@permaweb/libs/dist -type f -exec sed -i "s|https://arweave.net|${GATEWAY_URL:-http://localhost:4000}|" {} +
+        RUN find node_modules/@permaweb/libs/dist -type f -exec sed -i 's|,\(.+=" recipient"\);break}|;break}\1;|' {} +
         RUN npm run build
 
         FROM nginx:alpine
